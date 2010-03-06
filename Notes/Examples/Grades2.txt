@@ -1,0 +1,4 @@
+Jones:  10 101
+Staley: 12 14.5 11
+Smith: n/a n/a n/a
+Baker: 42 n/a 43
