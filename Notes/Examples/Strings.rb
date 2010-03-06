@@ -13,7 +13,7 @@ puts s1
 puts s2
 puts s3
 
-puts ("P1: "+s1+"\n"+s2+"\n"+s3) # Strings concatenate witn +
+puts("P1: "+s1+"\n"+s2+"\n"+s3)  # Strings concatenate witn +
 puts("P2: #{s1[2]} #{s1.size}")  # Strings generally work like arrays
 puts("P3: #{s1[2].length()}")    # Indexing a string produces a 1-char string
 puts("P4: #{s1.slice!(0, 6)}")   # And slice! chops one up, returning part...

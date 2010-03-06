@@ -8,6 +8,7 @@ class Point
       @x, @y = x, y   #Create @x and @y member data and initialize them
    end
    
+   # creates get + set methods automagically (attr_reader is RO)
    attr_accessor "x", "y"
 
    def to_s

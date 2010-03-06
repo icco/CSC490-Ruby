@@ -30,7 +30,7 @@ pt1 = Point.new(1, 2)
 pt2 = Point.new(3, 4)
 
 pt1.x=(pt1.x() + 10)
-pt1.y= pt1.y() + 10;
+pt1.y= pt1.y() + 10
 pt2.x = pt2.x + 10
 pt2.y += 10
 

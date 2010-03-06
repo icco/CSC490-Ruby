@@ -1,5 +1,5 @@
 # Copyright 2010 Software Inventions, Inc
-# 1. Basic aays and initialization
+# 1. Basic arrays and initialization
 # 2. Array methods, dynamic sizing
 # 3. Self-modifying and non-self-modifying methods
 # 4. Nil on out-of-range index
@@ -9,7 +9,7 @@ a1 = [30, 20, 10]            # Create an Array object
 puts "array of #{a1.length}" # Length method like Java or C#
 puts "P1: #{a1}"             # arrays got their own to_s -- convenient
 
-a2 = a1                      # Shallow copy
+a2 = a1                      # Shallow copy !IMPORTANT
 a3 = a1.clone                # Deep copy
 a1.push(0)                   # eh, we need one more
 puts "P2: #{a1}"             # .. so now it has one more
@@ -44,5 +44,4 @@ puts a1.join(" plus ")       # Pick any separator you like
 puts a1.join                 # .. or none at all
 
 # READ THE ARRAY DOCS so you know what's available to use
-
 
