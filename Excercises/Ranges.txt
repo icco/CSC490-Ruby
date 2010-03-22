@@ -2,8 +2,15 @@
  
 # 1. What happens if you range-index an array past its bounds?
 
+It truncates the range to the array bounds and provides the up to the end of
+the array.
 
 # 2. What happens when you to_a a string range where start and end
 # strings have different numbers of chars
 
+you get an array full of strings that are slowly growing and increasing from
+the starting point.
+
+for example  
+   ("a".."ab").to_a => ["a", ... , "w", "x", "y", "z", "aa", "ab"]
 
