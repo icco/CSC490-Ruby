@@ -6,7 +6,7 @@
 
 a1 = [1, 2, 3]
 x, y, z = a1                   # Can assign to/from scalars
-puts "P1: ${a1} | #{x},#{y},#{z}" 
+puts "P1: #{a1} | #{x},#{y},#{z}" 
 
 a2 = x, y, z                   # Works from scalar to array, too
 u, v = a1                      # Uses only as many elements as needed
