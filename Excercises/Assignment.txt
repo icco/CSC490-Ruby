@@ -2,7 +2,12 @@
  
 # 1. Rewrite a.push(3) using only assignment, comma, and splat.
 
+a = [1, 2, 4]
+a = *a, 3
 
 # 2. Write an appropriate "def" line, with parameters, for printf.
 
+def printf (str *args)
+   ...
+end
 
