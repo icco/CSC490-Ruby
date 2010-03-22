@@ -6,8 +6,11 @@
  
 # 2. Change a1 so that it follows exactly opposite <=> rules than a normal
 # array,  Do this with just 3 lines of code.
+
+def a1.<=> (other)
+   a1
+end
  
 # 3. Why does a4 > a3 in the P7 line turn out to be true??
 
-
-
+P7 is true because we are calling a4.>, which in turn calls a4.<=>, which has not been changed, like a3.<=> has.
