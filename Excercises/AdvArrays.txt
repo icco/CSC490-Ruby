@@ -1,16 +1,26 @@
 # Exercises
-#
+ 
 # 1. Setup up and then print out a 2x3x4 array of integers
 
+a3d = [ [ [1, 2, 3, 4,], [5, 6, 7, 8], [9, 10, 11, 12] ], [ [1, 2, 3, 4,], [5, 6, 7, 8], [9, 10, 11, 12] ] ]
+
+for r1 in (0...a3d.size)    
+   for r2 in (0...a3d[r1].size)
+      for r3 in (0...a3d[r1][r2].size)
+         print " #{a3d[r1][r2][r3]}"
+      end
+   end 
+end
 
 
 # 2. Does == work to compare two 2x3x4 arrays?  How, if so?
 
-
+Yes, because it just keeps decending into the sub arrays and comparing them.
 
 # 3. What does this return, and why?  
 # [[1,2], [3], [6]] <=> [[1, 2], [3, 1]]
 
+-1, because the first item has more elements.
 
 # 4. Fill your array from 1 with 0's using the "fill" method
 # from the docs.  Write this so that it will work correctly
