@@ -1,0 +1,948 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Win32)">
+	<META NAME="CREATED" CONTENT="20090416;11320300">
+	<META NAME="CHANGEDBY" CONTENT="Clinton Staley">
+	<META NAME="CHANGED" CONTENT="20100307;20454900">
+	<META NAME="Info 1" CONTENT="">
+	<META NAME="Info 2" CONTENT="">
+	<META NAME="Info 3" CONTENT="">
+	<META NAME="Info 4" CONTENT="">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		P { margin-bottom: 0.08in; so-language: zxx }
+		P.code-western { margin-bottom: 0in; font-family: "Courier New", monospace; font-size: 11pt; so-language: zxx; font-weight: bold }
+		P.code-cjk { margin-bottom: 0in; so-language: zxx }
+		P.code-ctl { margin-bottom: 0in; so-language: zxx }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" DIR="LTR">
+<P LANG="zxx" ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=6><B>Major
+Ruby Concepts</B></FONT></P>
+<P LANG="zxx" ALIGN=CENTER STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" ALIGN=CENTER STYLE="margin-bottom: 0in; font-weight: normal">
+<FONT SIZE=3>Copyright 2009-10 Software Inventions, Inc</FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><FONT SIZE=3><B>Overview</B></FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal">
+<FONT SIZE=3>This paper covers major Ruby concepts, from the
+perspective of those familiar with non-scripting languages like Java
+or C#. It is not a detailed description of Ruby. And, it's a work in
+progress, with more points to be added as needed. Use it as a guide
+to the Ruby &quot;big picture&quot; while you work through examples.</FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><FONT SIZE=3><B>1.
+Flexibility and expressiveness matter more than speed</B></FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal">
+<FONT SIZE=3>Ruby is not about fast execution; a typical Ruby app
+will take 10 times as long to run as an equivalent Java app. Ruby is
+about power and expressiveness. It has what most programmers regard
+as a really sweet syntax. You can say a lot in just a few lines in
+Ruby. As a nice example, consider this:</FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">x, y
+= y, x</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">x, y,
+z = z, x, y</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<FONT SIZE=3>The first swaps x and y, making parallel and
+simultaneous x = y and y = x assigments. The second one rotates the
+x, y, z values, making three parallel/simultaneous assignments to do
+so. This is typical of Ruby – things that would take 10 tedious
+lines in Java or C# can be done in one or two in Ruby.</FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><B>2. Ruby is
+interpreted, not compiled</B></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal">
+You write a Ruby program as the usual source text file, usually
+having an .rb suffix. But you don't compile it; you run the source
+file directly via the &quot;Ruby interpreter&quot;, usually the
+command &quot;rb&quot;. This program reads the source directly
+(probably precompiling it internally for speed, but you can't tell)
+and runs it. This process occurs every time you run the program. This
+fusion of compilaiton and execution is one major reason for Ruby's
+slowness, but it also allows a very fast test-cycle, where you modify
+and directly run a program over and over, with no intervening compile
+step. Note it also means there are no compile errors per se; all
+errors occuir during execution. However, some interpreter errors deal
+with &quot;compile type&quot; problems like syntax errors, while
+others deal with &quot;runtime type&quot; errors.</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><FONT SIZE=3><B>3.
+Everything's an Object</B></FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal">
+<FONT SIZE=3>Ruby is a pure OO language – it's a SmallTalk
+descendant. Languages like Java or C# have some &quot;elemental&quot;
+types like integers or characters that are not objects, but in Ruby
+<I>everything</I> <SPAN STYLE="font-style: normal">is derived from
+the base Object class, even numerical and character data. This means
+that ints, even constants, are objects, are derived from Object, and
+have methods. Don't be surprised by expressions like 3.upto(5), or
+4.succ().</SPAN></FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal">
+<FONT SIZE=3><SPAN STYLE="font-style: normal">This also means that
+</SPAN><SPAN STYLE="font-style: normal"><B>all </B></SPAN><SPAN STYLE="font-style: normal">variables
+in Ruby are references pointing to dynamically allocated objects.
+Even ints and chars are dynamically allocated, and a constant like
+&quot;3&quot; should be viewed as a reference to an integer object
+with &quot;3&quot; as its content (rather like an Integer in Java, or
+a boxed int in C#). The same goes for chars, which in fact are simply
+1-char String objects in recent Ruby versions.</SPAN></FONT></P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" ALIGN=LEFT STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+<FONT SIZE=3>You can, of course, create your own classes. Unless you
+specify otherwise, these are automatically derived from Object, and
+inherit a number of methods from Object, which we'll discuss below.</FONT></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>4. Type is a moral
+principle, not a law.</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">That's
+a whimsical way of saying that Ruby is loosely typed. The language
+has types, but they're not nearly as strict as in languages like Java
+or C#. If you imagine a Java or C# program and library suite where
+all parameters and references are to Object, and thus point to any
+type they like, that's a good metaphor for Ruby's typing. Ruby
+references (and remember <B>all</B> variables are references) may
+point to a target object of any type. If they call a method on their
+target object, then the call works if the object has that method, or
+the call fails at runtime if it doesn't.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>5. Ruby is a one-man show</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">This point has more to do
+with Ruby design and philosophy than language particulars. Ruby is
+the brainchild of Yukihiro Matsumoto, or &quot;Matz&quot; in the Ruby
+community. Matz is to Ruby as Larry Wall is to Perl, or Bjarne
+Stroustrup is to C++. Languages designed by teams tend to have
+consistent and regular design because features may only be added if
+the team agrees, and if they fit well with the overarching language
+design. Languages with a single parent tend to be somewhat
+idiosyncratic, because a single language author can do what s/he
+pleases. Ruby is no exception to this rule, and you will find all
+manner of odd corners in the langauge added just because they provide
+a bit of convenience. Even more interesting, you'll find that
+successive versions of Ruby do not always provide backward
+compatibility with older versions. Deprecation of old Ruby features
+is somewhat summary, and done by fiat.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>6. Objects are small
+symbol tables</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">It's
+useful to view Ruby objects as small symbol tables, or hash tables,
+with &quot;entries&quot; that are member data or methods, indexed by
+their member name. If you think about it, you could create an entire
+language where all objects were just hash tables with such entries.
+To get an object's member datum, you'd look it up in the
+object/hashtable, and to call an object's method, you'd look in the
+object/hashtable for a reference to the method's code, and jump to
+it, passing the object/hashtable to the method as the &quot;this&quot;
+object (uising Java terminology) or as &quot;self&quot; (using Ruby
+terminology). This is the underlying mechanism in Ruby, and in many
+scripting languages.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Such an
+approach presents interesting possibilities, like adding methods or
+data to specific objects <I>after they're created</I>, even though
+the new data or methods are not part of the object's class. Under
+this system, a class becomes more of a &quot;prototype&quot; or
+&quot;object factory&quot;. Sure, you use a class to create an
+object, but the class just sets up the object/hashtable's initial
+member data and methods. If you want to tweak the object later to add
+new member data or methods, or even to <I>remove</I> <SPAN STYLE="font-style: normal">existing
+member data or methods, you can.</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>7. Duck Typing</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Because
+of points 2 and 3 above, there is no strict typing of variables or
+parameters. You won't find Ruby giving you compile-time errors
+because you passed the wrong type of parameter, or assigned the wrong
+type to a variable. There's really only </SPAN><I><SPAN STYLE="font-weight: normal">one</SPAN></I>
+<SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">type
+– object/hashtable.</SPAN></SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">So,
+how do you indicate that a variable is supposed to be, say, a String?
+You do this by simply </SPAN></SPAN><I><SPAN STYLE="font-weight: normal">using</SPAN></I>
+<SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">the
+variable as a String, calling String methods on it. If it refers to a
+String, that'll work; if not, your program blows up at runtime. In
+fact, it's even looser than that. Say you have a variable str, and
+you call String's capitalize method on it: </SPAN></SPAN><I><SPAN STYLE="font-weight: normal">str.capitalize()</SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">.
+This works not only if str references a String, but also if it
+references any object that has a capitalize method. Remember, the
+method call is just a hashtable lookup on the object.(There is a Ruby
+operator &quot;respond_to?&quot; you can use to check that a method
+will work before you call – the closest thing Ruby has to a Java
+</SPAN></SPAN><I><SPAN STYLE="font-weight: normal">instanceOf</SPAN></I>
+<SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">or
+C# </SPAN></SPAN><I><SPAN STYLE="font-weight: normal">is</SPAN></I>
+<SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">operator,
+but it checks just a method, not an entire type.)</SPAN></SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+So, &quot;type&quot; in Ruby is about what methods an object provides
+(or can &quot;receive&quot; in Ruby terminology). If you don't want
+runtime blowups, be sure your object has the needed methods, but how
+you ensure that is up to you. Ruby's whimsical term for this idea is
+&quot;duck typing&quot; – if it walks like a duck, then it's a
+duck. The term also evokes quick-and-dirty assemblies of convenience
+(&quot;eh, just duck tape it&quot;) which frankly is also apropos to
+Ruby.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+(An aside for C++ programmers; this is like C++'s template mechanism,
+where template type parameters are defined only by what operators and
+methods they must provide).</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>8. Ruby syntax is
+designed for brevity, but this has drawbacks</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Ruby's
+syntax follows several philosophies:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">a.
+Avoid terminating punctuation like &quot;;&quot;. Use line breaks
+instead</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">b. Keep
+punctuation like () optional where possible</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">c. Have
+lots of different ways to express things like loops and conditionals</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">d. Opt
+for brevity even if it sometimes results in ambiguity</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Some
+concrete examples:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">a.
+Parentheses in function calls are optional</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">b.
+Statements end with line breaks</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">c.
+There are if, unless, while, until, and several other control
+keywords – many more than in most languages. And there are two
+radically different ways to express loops – the traditional syntax,
+and an &quot;iterator&quot; syntax.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Depending
+on your tastes, these are either great rules, or somewhat amateur
+language design. But either way, you need to watch for weird
+ambiguities because of the syntax's flexibility. For instance, if you
+break a long statement over several lines, you must do so at points
+where it is clear your statement is not finished, or Ruby will assume
+your line break ends the statement. Or consider this gem:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">x&gt;y?y:x # syntax error</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">x&gt;y ?y:x #OK, does what
+we expect</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">Methods may end with ?, and
+Ruby assumes that y? Is a method call when you leave out the space.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>9. Autodeclaration of
+variables and constants</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">OK, so if there are no
+types, how does one declare a variable/reference? Just name the
+variable? Yep. Ruby has no variable declaration statements. Variables
+spontaneously come into existence when you assign into them. To
+create a local variable, just use it, and give it a name that starts
+with a lowercase letter:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">count
+= 0 # Create a count local if one didn't already exist (# is the Ruby
+comment marker, btw)</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">So, how do you express that
+you want a variable to be a member datum vs a global instead of a
+local? (Yes, Ruby has global variables – more on that in point 7.)
+You do so with punctuation prefixes. Variable names may begin with @,
+e.g. @count, which makes them member variables. They may also begin
+with $, e.g. $total, which makes them global variables. Variables
+with lowercase names and no prefix-punctuation are automatically
+local variables.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">Constants may also be
+created in the same way, but they begin with capital letters. So:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">MaxValue
+= 100 # Create a constant MaxValue equal to 100</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">There are no local
+constants. Constant created within a method automatically belong to
+the class of that method. Those created outside of any method are
+global.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">At first glance this
+autodeclaration may seem convenient, but it is also a major source of
+bugs in Ruby and similar languages. Say you have a variable myTotal,
+and you accidentally assign to it thus:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">mytotal
+= 0</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">Congratulations, you just
+created a new local variable &quot;mytotal&quot;, entirely distinct
+from &quot;myTotal&quot;. Watch your spelling carefully in
+autodeclaration languages, and check carefully for accidental
+variable creations when you have a bug.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>10. Ruby identifiers
+include punctuation, under controlled circumstances</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">The @
+in a member datum name is the first example of this; there are many
+others. Ruby variable and method names may include punctuation,
+either as a prefix or suffix. Such punctuation may indicate the
+category of variable (e.g. @x for a member datum), or may mark it as
+an operator overload (see below) or may simply document a method as
+performing a certain type of action. Methods may end in ?, for
+instance, and this is (optionally) used to mark methods that return a
+true/false value (e.g. isDone?)</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>11. Ruby has global
+variables</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">As described in point 6,
+Ruby allows global variables. A global variable is one that is
+accessible to all parts of the code in common, and modifiable by any
+part of the code. If one method writes a value into a global, all the
+other code can access that value.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">For Java and C# programmers,
+the concept of a &quot;global&quot; variable may seem new, but in
+fact it's an old and often deprecated programming construct --
+deprecated because in any large program, global variables are a
+source of confusion, code coupling, and impenetrable bugs. Globals
+are convenient, however, which probably explains why a new pure-OO
+language like Ruby has them where other new languages don't. 
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>12. You have to use
+globals, at least the built in ones</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">It's good style to avoid
+creating globals in Ruby, but Ruby does come with a long list of
+useful predefined global variables, providing such information as the
+commandline arguments of the program, objects for standard text input
+and output, etc. Most of the info you'd get from the &quot;System&quot;
+class in Java is in the built-in global variable suite in Ruby. Using
+these globals is good style, and necessary. For instance, the STDIN
+global is a stream object that supplies standard input from the
+keyboard, and the ARGV global is an array of commandline arguments.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>13. When you write your
+own classes, the constructor is called &quot;initialize&quot;, and
+you use a method &quot;new&quot; to create an object</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Below
+is a simple Ruby class declaration. You begin with &quot;class&quot;
+and the class name, and you define methods with &quot;def&quot;. All
+methods are presumed to return some value, though this may be left
+unused.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<PRE>class Point
+   def initialize(x, y)
+      @x = x
+      @y = y   #Create @x and @y member data and initialize them
+   end
+end</PRE><P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">
+The method &quot;initialize&quot; is automatically called any time
+you create a new Point object, with parameters passed in the &quot;new&quot;
+call.</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in"><BR><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in; font-weight: normal">
+pt = Point.new(1, 2)</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Your
+Point class has a &quot;new&quot; method because it's automatically
+derived from Object, which has such a method. 
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">The
+&quot;initialize&quot; method not only initializes @x and @y; it in
+effect declares them to exist as member data, by using them.</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in"><BR><BR>
+</P>
+<P LANG="zxx"><B>14. Ruby has private/protected/public access, for
+member data, methods, and constants</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">All
+nonconstant Ruby member data are private. Period. The only way you
+get to a nonconstant member datum is via &quot;get&quot; and &quot;set&quot;
+methods. See point 7, however, to see how these can be made easier to
+use. 
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Constants,
+by contrast, are always public. Period. If a constant Max belongs to
+a class C, you must scope its name thus: C::Max. But it's always
+publicly accessible anywhere in the code.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Methods
+are more complex. They may be private, protected or public. Public
+means the same thing it does in other OO languages. But private and
+protected mean different things in Ruby than in other OO languages. A
+private method may be called <I>only</I> <SPAN STYLE="font-style: normal">from
+the object it belongs to. One object of class C may not call a
+private method </SPAN><I>even on other objects of class C</I><SPAN STYLE="font-style: normal">.
+Private methods are thus strictly for object-internal use only.
+Protected methods may be called by other objects of the same class,
+but are otherwise private. They thus behave like private methods in
+most other languages.</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+You use the keywords (actually, they're methods, but more on that
+later) &quot;public&quot;, &quot;private&quot; and &quot;protected&quot;
+to declare all methods following them to be of that access level. The
+access level keyword need only be mentioned once, and it stays in
+force for all following method declarations until it's changed or the
+class definition ends. (This is similar to C++, but not to Java or
+C#).</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx"><B>15. Blocks automatically return a value</B></P>
+<P LANG="zxx"><SPAN STYLE="font-weight: normal">Every block of
+statements, whether function body, if-statement branch, or loop-body,
+returns a value – whatever the value of its final statement is.
+(And note, assignment statements have a </SPAN><I><SPAN STYLE="font-weight: normal">value</SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">,
+the same as in C, C++, Java, and C#).. So, we can add accessor
+methods to our Point class thus. (Recall, member data are private, so
+the accessors are needed.) In Ruby as in C/C++/Java/C#, an expression
+by itself is a &quot;statement&quot;, and has the value of the
+expression. Thus we don't even need &quot;return @x&quot; (though
+this would be allowed). &quot;@x&quot; alone suffices. And, of
+course, one does not declare the return type of a Ruby method any
+more than one declares the type of parameters. We don't need no
+stinkin' types – everything's an Object.</SPAN></SPAN></P>
+<PRE>class Point
+   def initialize(x, y)
+      @x, @y = x, y   #Create @x and @y member data and initialize them
+   end
+   
+   def getX()
+      @x
+   end
+
+   def getY()
+      @y
+   end
+end</PRE><P LANG="zxx" STYLE="margin-bottom: 0in">
+<B>16. Ruby allows operator overloading. </B>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Like
+C++ and C#, but unlike Java, Ruby lets you define methods that may be
+called </SPAN><I><SPAN STYLE="font-weight: normal">by using operator
+syntax</SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">.
+This feature is called &quot;operator overloading&quot; in general,
+and &quot;operator defining&quot; in Ruby. An example:</SPAN></SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<PRE>class Point
+   def initialize(x, y)
+      @x, @y = x, y   #Create @x and @y member data and initialize them
+   end
+   
+   def getX()
+      @x
+   end
+
+   def getY()
+      @y
+   end
+
+   def +(pt)
+      Point.new(@x + pt.getX, @y + pt.getY)
+   end
+end</PRE><P LANG="zxx" STYLE="margin-bottom: 0in">
+The method named + is an operator overload. You may call it the
+conventional way:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">newPt
+= pt.+(otherPt) # Add pt and otherPt together, and assign the newly
+returned Point into newPt</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in"><BR><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">Or you can call it by just
+using the &quot;+&quot; sign, with the &quot;self&quot; object (pt)
+on the left and the would-be parameter object (otherPt) on the right:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">newPt
+= pt + otherPt # Does the exact same thing as above</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in"><BR><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">You can even chain multiple
+operator overloads together:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">newPt
+= pt + otherPt + yetAnotherPt # Same as newPt =
+pt.+(otherPt).+(yetAnotherPt)</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in"><BR><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">You may overload (or
+&quot;define&quot; in Ruby's terminology) most of the arithmetic,
+bitwise, and equality/inequality operators.. <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">In
+this way, we can write methods for many different operators, which
+methods may be called indirectly by using the operator and letting
+the operator overloading feature translate into the correct method
+call. In fact, many operators that appear to be built-in in Ruby are
+actually overloaded operator methods.</SPAN></SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal"><B>17.
+Attributes may be created via operator overloading.</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+A common use for operator overloading is to create get/set methods
+that can be used as though the member datum in question were public.
+Below, we modify the get-methods for x and y so their names are
+literally &quot;x&quot; and &quot;y&quot;. This, combined with the
+Ruby rule that parameterless function calls may omit the parentheses,
+lets us turn pt.getX() into just pt.x. 
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+And, via a special operator overloading rule we may also name
+set-methods x= or y=, instead of setX or setY. Such naming lets them
+be called via operator overloading: pt.x=(2) can be replaced by pt.x
+= 2:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<PRE>class Point
+   def initialize(x, y)
+      @x, @y = x, y   #Create @x and @y member data and initialize them
+   end
+   
+   def x()
+      @x
+   end
+
+   def y()
+      @y
+   end
+
+   def x=(val)
+      @x = val
+   end
+
+   def y=(val)
+      @y = val
+   end</PRE><P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+end</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+Some more examples:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">print
+pt.x # Retrieve and print @x</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">pt.x=42
+# Set @x to 42 -- same as calling pt.x=(42))</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">pt.x=
+pt.x + 2 # Increase @x by 2 – same as pt.x=(pt.x() + 2)</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in; font-style: normal">
+<B>pt.x += 2 # Same as pt.x=(pt.x() + 2) or pt.x = pt.x + 2 </B>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in"><BR><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal"><SPAN STYLE="font-style: normal">Using
+operator overloading to create an x, x= getter/setter pair that uses
+operator overloading results in an </SPAN><I>attribute</I> – <SPAN STYLE="font-style: normal">a
+private member datum which may nonetheless be used as though it were
+public, because of the operator overloading of the x= setter. But, it
+is better design than a simple public member, because we can add any
+type of housekeeping we like to the get and set methods, or can make
+the member datum readonly from outside the class by simply omitting
+the set method.</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>18. Class declarations
+are objects themselves, and the class definition is code to
+initialize a class-object.</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal"><SPAN STYLE="font-style: normal">Every
+Ruby class is an object in its own right, in a manner similar to
+Class objects in Java or Type objects in C#. (There is no C++
+analog.) The class Point declaration creates a (global) object named
+Point, describing the Point class, including all methods associated
+with it. We'll call this a </SPAN><I>class-object</I><SPAN STYLE="font-style: normal">.
+The class-object is itself derived from Object (like everything in
+Ruby) and also from an Object subclass called Module, which has
+methods of particular use in setting up a class description. The
+class-object is a factory or template for creating actual objects of
+that class. When you write:</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal; font-weight: normal">
+pt = new Point(1,2)</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal"><SPAN STYLE="font-style: normal">you
+are using the Point class-object to create a Point object of that
+type, which Point object will automatically have all the methods
+listed in the Point class-object. Like any Ruby object, a
+class-object is built on a hashtable that may be modified, so you may
+even change the Point class-object after the initial declaration,
+adding or removing methods. (</SPAN><I>Not</I> <SPAN STYLE="font-style: normal">something
+you can do in either Java or C#, where class declaratoins are fixed
+once done.) More on that later.</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal"><B>19.
+Class declarations are blocks of code that set up a class object.</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal"><SPAN STYLE="font-style: normal">The
+example Point class we've used so far </SPAN><I>looks</I> <SPAN STYLE="font-style: normal">like
+a class declaration, and so it is. But it is different from a C# or
+Java declaration in that it is a block of executable code, whose
+purpose is to set up a class object describing the class. The &quot;def&quot;
+keyword is a statement, meaning &quot;add this code as a method to
+the class-object&quot;. </SPAN>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>20. Automatic setup of
+attributes</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">None of
+us likes to write set/get methods, and Ruby offers a shorthand way to
+insert them into a class. You may automatically add get/set methods
+for x and y by placing this line in a class declaration:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in">attr_accessor
+&quot;x&quot;, &quot;y&quot; # Automatically add x, x=, y and y=
+get/set methods.</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in; font-weight: normal">
+or this</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in"><B>attr_reader
+&quot;x&quot;, &quot;y&quot; # Automatically add just get methods</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Any
+number of string arguments giving member-data names (the @ is added
+automatically) are allowed. 
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">These
+look like declarations, but in fact they're <I>method calls</I><SPAN STYLE="font-style: normal">.
+The methods in question are in the above-mentioned Module base class,
+and they run &quot;def&quot; statements to add get/set methods to the
+class, for the specified member data names. You can even add
+parentheses if you like: attr_reader(&quot;x&quot;, &quot;y&quot;)
+but parentheses are optional in Ruby method calls, and conventionally
+omitted for these methods.</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-style: normal"><B>21.
+Symbol variables</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal"><SPAN STYLE="font-style: normal">Since
+every variable refers to some object, you get the object when you use
+the variable name. There are cases where you want to refer to the
+name </SPAN><I>itself</I><SPAN STYLE="font-style: normal">, and you
+can do this by prepending the name with &quot;:&quot;. If </SPAN><SPAN STYLE="font-style: normal"><B>str</B></SPAN>
+<SPAN STYLE="font-style: normal">refers to a string object, then </SPAN><I><B>:str
+</B></I><SPAN STYLE="font-style: normal">refers to the name &quot;str&quot;
+itself (also represented with an object). So, for instance, an
+alternate to the above attr_accessor and attr_reader calls is:</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in; font-style: normal">
+attr_accessor :x, :y</P>
+<P LANG="zxx" CLASS="code-western" STYLE="margin-bottom: 0.2in; font-style: normal">
+attr_reader :x, :y</P>
+<P LANG="zxx" STYLE="font-style: normal; font-weight: normal">There
+are other cases where such symbol names come up, too.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>22. Standard Object
+methods</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">The
+Object base class offers a number of standard methods, which are
+often redefined by derived classes:</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<PRE>to_s   -- the equivalent of Java's toString, returning a String describing the object
+==     -- operator overload to do <I>deep</I> <SPAN STYLE="font-style: normal">comparison (note the difference with Java, where == is built in and compares shallowly)</SPAN>
+equal? -- method to do shallow comparison
+eql?   -- Method used by hashes for equality comparison
+hash   -- produces a hash code for hashes
+
+Others abound – see the docs</PRE><P LANG="zxx">
+<BR><BR>
+</P>
+<P LANG="zxx" STYLE="font-style: normal"><B>22. Arrays</B></P>
+<P LANG="zxx" STYLE="font-style: normal; font-weight: normal">Arrays
+are full objects, with behavior much linke Java's ArrayList. They are
+dynamically resizeable, indexable from either end, and indexable by
+subranges. Elements may be inserted or deleted from them at any point
+via appropriate methods. They are heterogenous – able to hold
+different types (including other arrays) in each element. They may be
+spontaneously created and initialized via a [elementlist] notation.
+The also have very commonly used &quot;join&quot; operation to create
+a single String out of all the array elements collectively, with a
+separator of your choice. It's impossible to get a runtime error by
+out-of-range indexing – you just get the &quot;nil&quot; value.</P>
+<P LANG="zxx" STYLE="font-style: normal"><B>22. Strings</B></P>
+<P LANG="zxx" STYLE="font-style: normal; font-weight: normal">Strings
+are full objects much like Java or C# strings, though with operator
+overloading to allow [] operations on them. They also have a &quot;split&quot;
+operation to break them into an array of Strings, with delimiter
+pattern of your choice. This is the partner to &quot;join&quot; in
+Arrays.</P>
+<P LANG="zxx" STYLE="font-style: normal; font-weight: normal">There
+is no independent &quot;char&quot; type in Ruby 1.9 and onward. If
+you index a String or otherwise attempt to get a single char, you get
+a one-char String object.</P>
+<P LANG="zxx"><BR><BR>
+</P>
+<P LANG="zxx" STYLE="font-style: normal"><B>23. Ranges</B></P>
+<P LANG="zxx" STYLE="font-style: normal; font-weight: normal">There
+is a built in type for ranges of values: integers, chars, or even
+floats or strings. Ranges are used for testing and also for indexing
+of arrays and strings and to control for-loops</P>
+<P LANG="zxx"><BR><BR>
+</P>
+<P LANG="zxx" STYLE="font-style: normal"><B>24. Hashes</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">There is a built in Hash
+type, rather like Java's HashMap. Hashes may be set up pre-filled via
+a {} notation, and they are heterogenous like arrays, allowing
+different value and even key types in the same Hash.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>25. Inheritance</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">Classes may derive from one
+another, and all classes derive from Object ultimately. But, since
+there is no strict typing, this doesn't mean as much as it would in a
+strict typed language like Java. If class Derived dervies from class
+Base, it gets all of Base's &quot;defs&quot; automatically. And it
+gets all of Base's initial member data if its initialize method calls
+Base's initialize method. (Recall that member data come into
+existence by being assigned-into, generally in the &quot;initialize&quot;
+method.) So a Derived &quot;isa&quot; Base, in the usual OO sense,
+but of course duck typing means that some other non-derived type can
+also be a Base if it has the necessary methods.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>26. No interfaces needed</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in">Because of duck typing,
+there's no need to formally declare or implement interfaces. Where in
+Java or C# you might define an interface I with methods a and b, in
+Ruby you simply supply methods a and b in a class C, and it
+automatically &quot;implements&quot; interface I, in the sense that
+any code that assumes an object has methods a and b will work with an
+object of class C.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>27. Booleans and
+comparison</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Booleans
+and comparisons are similar to other languages, but with some
+idiosyncrasies. There are built-in &quot;false&quot; and &quot;true&quot;
+objects returned by the boolean and comparative operations. &quot;False&quot;
+and nil both count as false values, but any other (including
+numerical 0) counts as true in a boolean test. There is a distinction
+between shallow (reference only) and deep comparison, as in other OO
+languages, but typically an overloaded == operator does deep
+comparison while equal? does shallow comparison.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">There
+is a &lt;=&gt; operator (along with all the usual comparatives) that
+works like a strcmp in C, or a compareTo in Java, returning -1, 0, or
+1 depending on whether the first operand is less than, equal to, or
+greater than the second. Classes may define this operator as a single
+one-method definition of ordering for objects of the class. Array.&lt;=&gt;
+is defined to do a lexicographic comparison of two arrays, much like
+string comparison, with pairs of array elements compared in
+succession.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>28. Modules (e.g.
+Comparable)</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Ruby
+has &quot;modules&quot;, which are sets of predefined methods that
+you can include in any class via a C-like include mechanism. A good
+example is &quot;Comparable&quot;, which automatically adds ==, !=,
+&lt;, &gt;, &lt;= and &gt;= overloads to any class. These all depend
+on a preexisting &lt;=&gt; definition (not supplied by Comparable),
+which all the relational methods in Comparable call in order to
+determine what to return.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>29. Assignments</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">As
+noted briefly in point 1, Ruby assignment is remarkably flexible and
+powerful. Groups of scalars may be simultaneously assigned into other
+groups (even into the same group in different orders) and assignments
+may be made back and forth between arrays and groups of scalars. This
+applies also to passing parameters and returning values – a list of
+scalar parameters may be passed to a single array parameter, or vice
+versa, and likewise groups of scalars may be returned as a single
+array.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>30 Class variables and
+methods</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Ruby
+has class variables (like static variables in Java or C#), marked by
+names beginning with @@, and created spontaneously upon
+initialization in the body of the class declaration (not in the
+initialize method, which would cause them to be reinitialized on each
+object creation, defeating their purpose). Ruby also allows
+declaration of class methods, by qualifying the method name with the
+class name (e.g. def MyClass.method).</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Ruby
+also offers a very subtly different type of variable, not found in
+most other languages – a class member variable. This is a variable
+with @ (not @@) prefix, initialized in the class body, not in the
+initialize method. It's a standard member datum, but of the </SPAN><B>class</B>
+<SPAN STYLE="font-weight: normal">object, not of the objects created
+from the class. It's most akin to an annotation in Java, in that it
+can be accessed only through the class object itself. Confusingly,
+class member data may have the same names as ordinary member data,
+but they cannot be accessed via non-class methods. An attempt to
+reference a class member datum &quot;@x&quot; within a non-class
+method simply results in creation of a distinct (though similarly
+named) object member datum @x.</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>31. Singleton methods</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Ruby
+lets you add new, or redefine existing, methods even in an already
+constructed object. You can, for instance, decide that one particular
+object of some class will have its own &lt;=&gt; method, while the
+other objects retain the &lt;=&gt; method defined by their class.
+(This was alluded to in point 18 above.) Or, you may add a new method
+&quot;func&quot; to an object, while no other objects of its class
+have that method. Such one-off methods are called </SPAN><B>singleton</B>
+<SPAN STYLE="font-weight: normal">methods (not to be confused with
+the singleton design pattern common in OO design.) One may even drop
+methods from an existing object dynamically, so that it no longer has
+a given method once that method has been removed from it.</SPAN></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Again,
+as mentioned in point 18, a Ruby class declaration is not so much a
+strict statement of a type and its methods and members, as it is a
+&quot;template&quot; used to build an object, which initially built
+object may later be edited by the addition of singleton methods or
+the removal of methods.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">This
+applies even to class declarations themselves. You may set up a class
+declaration, use it to create several objects, and then edit the
+class declaration further, adding new methods, for instance. Objects
+created after such modification will include the new methods; those
+created before the modification will not (unless of course you decide
+to hand-modify the older objects by adding similar singleton methods
+to them)</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>32. Profusion (and
+confusion) of control structures</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Ruby
+has a lot of different ways to say the same basic loops and
+if-structures. There are &quot;if&quot; and &quot;unless&quot;, as
+well as &quot;while&quot; and &quot;until&quot;. And loop and if
+headers may be framed as suffixes for one-line statements: i = 0 if j
+== 1. Whether this is a strength or a weakness of the language is a
+subject of some debate.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>33. Regular Expressions</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Regular
+expressions are built-in types in Ruby, and include all the usual
+regular expression notation and options found in Java libraries,
+powerful text editors, etc. These include concatenation, repetition
+operators, alternation, character classes, and capture groups. REs
+may be used for string testing, of course, but also for powerful
+string editing such as splitting on complex criteria, or
+substitution.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>34. Blocks/iterators</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Ruby
+allows the declaration of independent blocks of code, with their own
+list of parameters. These are like methods, but lack any name, and
+instead are spontaenously created (by enclosing code in {}) and
+passed to regular methods as a sort of subroutine. The regular
+method, being passed a block, may call it via a &quot;yield&quot;
+statement (&quot;yielding&quot; control to the block) and the block
+may return a value, which becomes the result of the yield statement.
+Blocks thus serve a purpose similar to a function pointer in C, or
+what might be done with an anonymous inner class in Java – they
+allow you to quickly describe some one-use code to be executed by a
+method, probably repeatedly.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">Many
+Ruby composite classes, like Array and Hash, have methods
+specifically designed to work with blocks. They will typically loop
+through all the items in their Array or Hash, passing each to the
+block in turn. Such looping, block-calling methods are called
+&quot;iterators&quot; in Ruby. They allow you to do some arbitrary
+action on all the elements of a composite class, perhaps printing
+them all, or sorting them, or totalling them.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">There
+is even an Enumerable module, rather like the Comparable module,
+which you may include to automatically generate a large set of
+standard iterator methods for a class of your own creation. You need
+only define an &quot;each&quot; iterator method, and all the other
+methods in Enumerable rely upon it.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><B>35. Closures</B></P>
+<P LANG="zxx" STYLE="margin-bottom: 0in; font-weight: normal">One may
+create a full object out of a block, creating a sort of free-agent
+method called a &quot;proc&quot; or &quot;lambda&quot; (after the
+synonymous Ruby keywords used to create them). A proc or lambda may
+then later be called, or passed about to other methods to call.
+Procs/lambdas exhibit &quot;closure&quot; semantics, which means that
+the runtime stack context in effect <B>when they were created</B>
+remains in effect later <B>when they are called</B>. In essence, a
+proc/closure is a combination of a block of code and a runtime stack
+context.</P>
+<P LANG="zxx" STYLE="margin-bottom: 0in"><BR>
+</P>
+</BODY>
+</HTML>

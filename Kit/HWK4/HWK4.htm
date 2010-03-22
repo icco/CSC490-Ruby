@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>CSC 109 -- Accelerated Introduction</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Clinton Staley">
+	<META NAME="CHANGED" CONTENT="20100307;19185800">
+	<STYLE TYPE="text/css">
+	<!--
+		A:link { color: #0000ff; font-family: "Times New Roman", serif }
+		A:visited { color: #800080 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" LINK="#0000ff" VLINK="#800080" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=5><B>CPE 490</B></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=5><B>Ruby
+Programming</B></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in">Homework 4</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in">Due 3/26/10</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><B>Assignment </B>
+</P>
+<P STYLE="margin-bottom: 0in">Write a Decrypt program that helps
+decrypt substitution ciphers.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in">Accept the files to be decrypted
+	as commandline arguments.  Open each and decrypt it as described
+	below.  Be sure to close each one.</P>
+	<LI><P STYLE="margin-bottom: 0in">For each file, first do an initial
+	attempt at automatic decryption.  Assume that the frequency of
+	letters in English is, in descending order:
+	etaoinshrdlcumwfgypbvkjxqz  Count how often each letter occurs in
+	the encrypted file, and match the most common one with e, the next
+	most common one with t, etc.  If two letters are equally common in
+	the encrypted file, assume the one higher in alphabetic order is the
+	“more frequent”.  With the mapping thus derived, perform and
+	display a crude decryption of the file, for the user to improve
+	upon.  Display “Enter command:” and await the user's input.</P>
+	<LI><P STYLE="margin-bottom: 0in">The user may now enter lines
+	comprising one or more space-separated “map correction” pairs,
+	each in the form x-&gt;y.  Such a pair means “turn all x's, upper
+	or lower case, to y's, and vice versa”.  Apply each pair in
+	succession, and then reprint the text and the “Enter command:”
+	prompt.</P>
+	<LI><P STYLE="margin-bottom: 0in">Once the user is satisfied with
+	the decryption, he enters “None”.  The program writes out the
+	decrypted version, to the name &lt;original file name&gt;.dec.</P>
+	<LI><P STYLE="margin-bottom: 0in">Total non-blank, non-comment lines
+	must be at most 75, subject to the same style rules as HW 2. (Mine's
+	65, and I was kinda sloppy.)</P>
+	<LI><P STYLE="margin-bottom: 0in">See the model input and output to
+	disambiguate the spec.</P>
+</OL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><B>Submission</B></P>
+<P STYLE="margin-bottom: 0in">Submit your homework to the IHS system
+as problem 5 (HWK 4) of Ruby code problems.</P>
+</BODY>
+</HTML>

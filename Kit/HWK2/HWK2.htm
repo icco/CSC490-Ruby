@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>CSC 109 -- Accelerated Introduction</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Clinton Staley">
+	<META NAME="CHANGED" CONTENT="20100307;18101600">
+	<STYLE TYPE="text/css">
+	<!--
+		A:link { color: #0000ff; font-family: "Times New Roman", serif }
+		A:visited { color: #800080 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" LINK="#0000ff" VLINK="#800080" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=5><B>CPE 490</B></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=5><B>Ruby
+Programming</B></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in">Homework 2</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in">Due 3/24/10</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><B>Assignment </B>
+</P>
+<P STYLE="margin-bottom: 0in">Write an improved WordCount program.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in">Alter the homework 1 program to
+	use a different collating order than ASCII when sorting Hash
+	entries. Do this by creating a new CollString class and using this
+	as your hash key</P>
+	<LI><P STYLE="margin-bottom: 0in">CollString is derived from string,
+	and redefines exactly one String method, causing String sorting to
+	be done by an arbitrary collation order. (This is not a contrived
+	example. It can be used to sort upper and lower case letters
+	together, and to accommodate collation sequences from different
+	languages. The ASCII sequence reflects only English.).</P>
+	<LI><P STYLE="margin-bottom: 0in">For filling your hash, use logic
+	<B>unchanged</B> from your original WordCount.rb program except
+	perhaps for fixing bugs you discovered late, and to add one line
+	that creates a CollString.</P>
+	<LI><P STYLE="margin-bottom: 0in">The one redefined method in
+	CollString <B>may have at most one loop in it and may define only
+	simple locals like an int</B>. Comparison needs to be fast.</P>
+	<LI><P STYLE="margin-bottom: 0in">Define your collation sequence by
+	a constant string Sequence in the CollString class,  giving the new
+	collation sequence.  Give Sequence this value:</P>
+	<P STYLE="margin-bottom: 0in">'WwAaBbQqCcDdEeFfGgHhIiJjKkLlMmNnOoPpRrSsTtUuVvXxYyZz1234567890'
+	Note that this puts w as the first letter in the alphabet, and also
+	puts together upper and lower case letters in pairs, so that for
+	instance all words starting with A or a come before all starting
+	with b or B. And words starting with 'A' come before those starting
+	with 'a'. Also, all digits are higher than all alphabetics. Any
+	symbols not in the collation sequence have equal collating value,
+	and are less than all in the sequence.</P>
+	<LI><P STYLE="margin-bottom: 0in">Add class variable(s) to
+	CollString to support your new comparison logic, so it runs fast. 
+	(I recommend a hash of some sort). Precalculate the class variable
+	from Sequence, <B>but only once</B><SPAN STYLE="font-weight: normal">,
+	not each time two CollStrings are compared.</SPAN></P>
+	<LI><P STYLE="margin-bottom: 0in">When you print word counts, do so
+	in decreasing order of frequency, and within same-frequency words,
+	in increasing order by the new collating rules.</P>
+	<LI><P STYLE="margin-bottom: 0in">Use at most 48 non-blank
+	non-comment lines of at most 80 columns with 3-space indentation,
+	without “scrunching” lines together (e.g. one expression per
+	line). The model solution has just 40 such lines.</P>
+	<LI><P STYLE="margin-bottom: 0in">See the model input and output to
+	disambiguate the spec.</P>
+</OL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><B>Submission</B></P>
+<P STYLE="margin-bottom: 0in">Submit your homework to the IHS system,
+as problem 2 (HWK2) under Ruby code problems.</P>
+</BODY>
+</HTML>

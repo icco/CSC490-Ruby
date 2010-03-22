@@ -1,0 +1,17 @@
+Alpha alpha alpha Alpha
+Word word Word word
+
+
+StuffWx Stuffwb Stuffab StuffAx
+Here's a little Ruby source, just for fun:
+
+h = Hash.new
+File.open(ARGV[0], "r").each { |line|
+   line.split.each {|word|
+      if h.has_key?(word)
+         h[word] = h[word] + 1
+      else
+         h[word] = 1
+      end
+  }
+}
