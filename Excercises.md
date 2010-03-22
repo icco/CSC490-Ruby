@@ -6,10 +6,13 @@
  * Ranges.rb
  * Strings.rb
  * Assignment.rb
+ * Booleans.rb
 
 ## Sunday March 21st
 
-...
+ * AdvInheritance.rb
+ * Comparable.rb
+ * ControlStructures.rb
 
 ## Monday March 22nd
 
@@ -25,15 +28,12 @@
 
 ## Unknown
 
- * Comparable.rb
  * Enumerable.rb
  * Iterators.rb
- * ControlStructures.rb
  * FilesAndExceptions.rb
  * Closures.rb
  * Hashes.rb
  * SurpriseInheritance.rb
- * AdvInheritance.rb
  * Procs.rb
  * RegularExpressions.rb
 
