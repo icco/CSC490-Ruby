@@ -1,0 +1,16 @@
+# Exercises
+ 
+# 1. Simplify these regular expressions
+# /a**/ /a+*/ /a.*/ /(ab)?(ab)*/  /(a*|b*)+/  /ab?|ab/
+
+ /a**/ => /.*/
+ /a+*/ => /.*/
+ /a.*/ => /a/
+ /(ab)?(ab)*/ => /(ab)*/
+ /(a*|b*)+/ => /(a|b)*/
+ /ab?|ab/ => /ab?/
+ 
+# 2. Do the first 4 problems in Regex Problems on IHS.
+
+I'll be attempting these soon...
+
