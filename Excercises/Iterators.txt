@@ -1,0 +1,18 @@
+# Exercises
+ 
+# 1. Rewrite the P3 loop using bu.each, instead of for, and try it out.
+
+bu.each do |i| 
+   puts "P3: #{i}"
+end
+
+# 2. Write a single line that prints the number of even elements in an
+# array of integers.
+ 
+ints.map{|x| if x % 2 == 0; puts x end}
+
+# 3. Write another single line that deletes all the odd elements from the
+# array
+
+ints = ints.delete_if{|x| x % 2 != 0}
+
