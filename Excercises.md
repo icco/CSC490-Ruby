@@ -16,24 +16,18 @@
 
 ## Monday March 22nd
 
-...
+ * Hashes.rb
+ * SurpriseInheritance.rb
+ * Iterators.rb
+ * Enumerable.rb
 
 ## Tuesday March 23rd
 
-...
+ * FilesAndExceptions.rb
+ * RegularExpressions.rb
 
 ## Wednesday March 24th
 
-...
-
-## Unknown
-
- * Enumerable.rb
- * Iterators.rb
- * FilesAndExceptions.rb
  * Closures.rb
- * Hashes.rb
- * SurpriseInheritance.rb
  * Procs.rb
- * RegularExpressions.rb
 
