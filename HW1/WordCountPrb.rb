@@ -1,15 +1,22 @@
-h = Hash.new
-File.open(ARGV[0], "r").each { |line|
-   line.split.each {|word|
-      if h.has_key?(word)
-         h[word] = h[word] + 1
-      else
-         h[word] = 1
-      end
-  }
+# Counts words
+
+h = Hash.new(0)
+ARGV.each { |file| 
+   File.open(file, "r").each { |line|
+      line.split.each {|word|
+         # Strip away punctuation at beg and end
+         word.gsub!(/^[(,$?!\"_\'{}@#|*%+\\=\-\^\<\/>\[\]&;:.)]*/, '')
+         word.gsub!(/[(,$?!\"_\'{}@#|*%+\\=\-\^\<\/>\[\]&;:.)]*$/, '')
+
+         if word.length > 1 
+            h[word] = h[word] + 1
+         end
+     }
+   }
 }
 
-# sort the hash by value, and then print it in this sorted order
-h.sort{|a,b| a[1]<=>b[1]}.each { |elem|
+# sort by value in descending order, then by Key in ascending order, and then
+# print it in this sorted order
+h.sort{|a,b| c = b[1] <=> a[1]; if c == 0; a <=> b; else c end }.each { |elem|
   puts "\"#{elem[0]}\" has #{elem[1]} occurrences"
 }
