@@ -34,19 +34,27 @@ class CollString < String
    end
 end
 
+class Count < Integer
+   @lines = []
+end
+
 # Init Hash
-h = Hash.new(0)
+h = Hash.new(Count.new(0))
 
 # For each file
 ARGV.each { |file| 
    File.open(file, "r").each { |line|
       line.split(/\W/).each {|word|
          if word.length > 0
-            h[CollString.new(word)] = h[word] + 1
+            key = CollString.new(word)
+            h[key] = h[word] + 1
+            h[key] = h[word].lines.push(line)
          end
       }
    }
 }
+
+p h.inspect
 
 # sort by value in descending order, then by Key in ascending order, and then
 # print it in this sorted order
