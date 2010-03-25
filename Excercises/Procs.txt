@@ -4,6 +4,8 @@
 # 3. Dynamic, branching, RTS
 
 class Account
+   @@charged = 0;
+
    def initialize(name, bal)
       @name = name    # Account name
       @balance = bal  # Initial balance
@@ -13,8 +15,9 @@ class Account
 
    def getCharge(amt)
       return proc {
+         @@charged += amt
          @balance -= amt
-         puts "Charging #{amt} to #{@name} leaving #{@balance}"
+         puts "Charging #{amt} to #{@name} leaving #{@balance}. Total #{@@charged}"
       }
    end
 end
@@ -43,3 +46,31 @@ chg2b.call
 # track of the aggregate total of amounts charged through it, 
 # and reports this on each call.  For instance, on the second 
 # call of chg1a, chg1a would report an aggregate total of 20.  
+
+here is a diff of what I changed
+
+--- ../Kit/Examples/Procs.rb  2010-03-24 01:11:35.000000000 -0700
++++ Procs.txt  2010-03-24 18:31:32.000000000 -0700
+@@ -4,6 +4,8 @@
+ # 3. Dynamic, branching, RTS
+ 
+ class Account
++   @@charged = 0;
++
+    def initialize(name, bal)
+       @name = name    # Account name
+       @balance = bal  # Initial balance
+@@ -13,8 +15,9 @@
+ 
+    def getCharge(amt)
+       return proc {
++         @@charged += amt
+          @balance -= amt
+-         puts "Charging #{amt} to #{@name} leaving #{@balance}"
++         puts "Charging #{amt} to #{@name} leaving #{@balance}. Total #{@@charged}"
+       }
+    end
+ end
+
+
+
