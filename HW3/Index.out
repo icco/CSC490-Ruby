@@ -1,0 +1,141 @@
+For Alpha:
+   (Index.arg1) 2
+   (Index.arg2) 1
+For ARGV:
+   (Index.arg1) 9
+   (Index.arg2) 9
+For a:
+   (Index.arg1) 4, 20
+   (Index.arg2) 6
+For alpha:
+   (Index.arg1) 2
+   (Index.arg2) 1
+For and:
+   (Index.arg1) 19
+For b:
+   (Index.arg1) 20
+For by:
+   (Index.arg1) 19
+For counting:
+   (Index.arg1) 6
+For each:
+   (Index.arg1) 9, 10, 20
+   (Index.arg2) 9, 10
+For elem:
+   (Index.arg1) 20, 21
+For else:
+   (Index.arg1) 13
+   (Index.arg2) 13
+For end:
+   (Index.arg1) 15
+   (Index.arg2) 15
+For File:
+   (Index.arg1) 9
+   (Index.arg2) 9
+For for:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For fun:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For Hash:
+   (Index.arg1) 8
+   (Index.arg2) 8
+For Here:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For h:
+   (Index.arg1) 8, 11, 12, 14, 20
+   (Index.arg2) 8, 11, 12, 14
+For has:
+   (Index.arg1) 21
+For has_key:
+   (Index.arg1) 11
+   (Index.arg2) 11
+For hash:
+   (Index.arg1) 19
+For if:
+   (Index.arg1) 11
+   (Index.arg2) 11
+For in:
+   (Index.arg1) 19
+For it:
+   (Index.arg1) 19
+For just:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For line:
+   (Index.arg1) 9, 10
+   (Index.arg2) 9, 10
+For little:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For Minor:
+   (Index.arg1) 6
+For new:
+   (Index.arg1) 8
+   (Index.arg2) 8
+For occurrences:
+   (Index.arg1) 21
+For open:
+   (Index.arg1) 9
+   (Index.arg2) 9
+For order:
+   (Index.arg1) 19
+For print:
+   (Index.arg1) 19
+For program:
+   (Index.arg1) 6
+For puts:
+   (Index.arg1) 21
+For Ruby:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For r:
+   (Index.arg1) 9
+   (Index.arg2) 9
+For StuffAx:
+   (Index.arg1) 3
+   (Index.arg2) 5
+For Stuffab:
+   (Index.arg1) 3
+   (Index.arg2) 5
+For StuffWx:
+   (Index.arg1) 3
+   (Index.arg2) 5
+For Stuffwb:
+   (Index.arg1) 3
+   (Index.arg2) 5
+For s:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For sort:
+   (Index.arg1) 19, 20
+For sorted:
+   (Index.arg1) 19
+For source:
+   (Index.arg1) 4
+   (Index.arg2) 6
+For split:
+   (Index.arg1) 10
+   (Index.arg2) 10
+For the:
+   (Index.arg1) 19
+For then:
+   (Index.arg1) 19
+For this:
+   (Index.arg1) 19
+For value:
+   (Index.arg1) 19
+For Word:
+   (Index.arg1) 1
+   (Index.arg2) 2
+For word:
+   (Index.arg1) 1, 6, 10, 11, 12, 14
+   (Index.arg2) 2, 10, 11, 12, 14
+For 1:
+   (Index.arg1) 12, 14, 20, 21
+   (Index.arg2) 12, 14
+For 0:
+   (Index.arg1) 9, 21
+   (Index.arg2) 9
