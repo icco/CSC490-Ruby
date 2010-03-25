@@ -59,3 +59,9 @@ Sample.new("Sample4").getClosure.call 1  #  Sample4  10  1  1
 #
 # If I call this as follows s1.callClosure(c2), what 
 # happens?  Whose member data is incremented, and why?
+
+you would print out the line "Sample2 11 3 3". s2's member data is incremented
+because the closure being exectuted is c2, which is where the environment is
+stored. Infact it would make more sense for callClosure to be a static method,
+because it entirely ignores the calling instance's  member data.
+

@@ -25,6 +25,9 @@ class Sample
          puts "#{@name} #{@@cVar} #{@counter} #{localVar}"
       }
    end
+ def callClosure(cls)
+   cls.call  1
+ end
 end
 
 s1 = Sample.new("Sample1")
@@ -48,6 +51,7 @@ c2.call 1                 #  Sample2  8  2  2
 c1.call 1                 #  Sample1  9  6  5
 
 Sample.new("Sample4").getClosure.call 1  #  Sample4  10  1  1
+s1.callClosure(c2)
 
 # Exercises
 #
