@@ -58,7 +58,7 @@ ARGV.each { |file|
 # sort by value in descending order, then by Key in ascending order, and then
 # print it in this sorted order
 h.sort.each { |name, files|
-   puts "For #{name}: "
+   puts "For #{name}:"
    files.each { |fname, lines|
       puts "   (#{fname}) #{lines.uniq.join(", ")}" 
    }
