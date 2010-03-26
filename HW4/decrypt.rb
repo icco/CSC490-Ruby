@@ -15,11 +15,13 @@ def replace str, from, to
       raise Exception.new("encoding patterns do not match.")
    end
 
-   return str.split(//).map {|x|  y = to[from.index(x.downcase)] 
-      if x >= "A"
-         y.capitalize
+   return str.split(//).map {|x|
+      if x.match(/\w/)
+         i = from.index(x.downcase)
+         y = to[i, 1]
+         x < "a" ? y.capitalize : y
       else
-         y
+         x
       end
    }.join
 end
