@@ -7,7 +7,7 @@ class CollString < String
       a = self.to_s
       b = other.to_s
 
-      for i in 0...a.length
+      for i in 0..a.length
          ai = a.length <= 0 ? -100 : @@lookup.index(a[0])
          bi = b.length <= 0 ? -100 : @@lookup.index(b[0])
          if ai == bi
