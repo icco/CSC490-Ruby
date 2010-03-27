@@ -4,6 +4,7 @@
 
 def countLetters file
    count = Hash.new(0)
+   ("a".."z").each {|let| count[let] = 0 }
    file.each { |line| line.downcase.split(//).each {|x| count[x.gsub(/\W/,'')] += 1} }
    count.delete("")
 
@@ -12,13 +13,13 @@ end
 
 def replace str, from, to
    if from.length != to.length
-      raise Exception.new("encoding patterns do not match.")
+      raise Exception.new("Encoding patterns do not match. \n #{from.inspect} \n #{to.inspect}")
    end
 
    return str.split(//).map {|x|
       if x.match(/\w/)
          i = from.index(x.downcase)
-         y = to[i, 1]
+         y = i ? to[i, 1] : x
          x < "a" ? y.capitalize : y
       else
          x
@@ -30,8 +31,24 @@ ARGV.each { |file|
    fc = File.open(file, "r").readlines.to_s
    to = "etaoinshrdlcumwfgypbvkjxqz"
    from = countLetters fc # create array with characters sorted by frequency
-   puts fc
-   puts replace(fc, from, to)
+   input = ""
 
+   begin
+      if input != ""
+         from = to = ""
+         input.downcase.split(" ").each {|x| 
+            a, b = x.split(/->/)
+            from += a
+            to += b
+         }
+      end
+
+      fc = replace(fc, from, to) 
+      puts fc
+      print "Enter command: "
+      $stdout.flush
+
+      input = $stdin.gets.chomp
+   end while input != "Done"
 }
 
