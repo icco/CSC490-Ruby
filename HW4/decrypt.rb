@@ -8,7 +8,13 @@ def countLetters file
    file.each { |line| line.downcase.split(//).each {|x| count[x.gsub(/\W/,'')] += 1} }
    count.delete("")
 
-   return count.sort {|a, b| b[1] <=> a[1] }.map { |k, v| k }.join
+   return count.sort {|a, b| 
+      c = b[1] <=> a[1]
+      if c == 0
+         b[0] <=> a[0]
+      else
+         c 
+      end }.map {|k, v| k }.join
 end
 
 def replace str, from, to
@@ -28,7 +34,8 @@ def replace str, from, to
 end
 
 ARGV.each { |file| 
-   fc = File.open(file, "r").readlines.to_s
+   f = File.open(file, "r") 
+   fc = f.readlines.to_s
    to = "etaoinshrdlcumwfgypbvkjxqz"
    from = countLetters fc # create array with characters sorted by frequency
    input = ""
@@ -41,6 +48,10 @@ ARGV.each { |file|
             from += a
             to += b
          }
+
+         ofrom = from.to_s
+         from += to
+         to += ofrom
       end
 
       fc = replace(fc, from, to) 
@@ -50,5 +61,6 @@ ARGV.each { |file|
 
       input = $stdin.gets.chomp
    end while input != "Done"
+   f.close()
 }
 
