@@ -25,9 +25,6 @@ class Sample
          puts "#{@name} #{@@cVar} #{@counter} #{localVar}"
       }
    end
- def callClosure(cls)
-   cls.call  1
- end
 end
 
 s1 = Sample.new("Sample1")
@@ -51,7 +48,6 @@ c2.call 1                 #  Sample2  8  2  2
 c1.call 1                 #  Sample1  9  6  5
 
 Sample.new("Sample4").getClosure.call 1  #  Sample4  10  1  1
-s1.callClosure(c2)
 
 # Exercises
 #
@@ -63,3 +59,9 @@ s1.callClosure(c2)
 #
 # If I call this as follows s1.callClosure(c2), what 
 # happens?  Whose member data is incremented, and why?
+
+you would print out the line "Sample2 11 3 3". s2's member data is incremented
+because the closure being exectuted is c2, which is where the environment is
+stored. Infact it would make more sense for callClosure to be a static method,
+because it entirely ignores the calling instance's  member data.
+

@@ -1,0 +1,76 @@
+# Copyright 2010 Software Inventions, Inc
+# 1. Procs -- storing a block
+# 2. Proc context rules
+# 3. Dynamic, branching, RTS
+
+class Account
+   @@charged = 0;
+
+   def initialize(name, bal)
+      @name = name    # Account name
+      @balance = bal  # Initial balance
+   end
+
+   attr_accessor :balance, :name
+
+   def getCharge(amt)
+      return proc {
+         @@charged += amt
+         @balance -= amt
+         puts "Charging #{amt} to #{@name} leaving #{@balance}. Total #{@@charged}"
+      }
+   end
+end
+
+acct1 = Account.new("Account1", 1000)
+acct2 = Account.new("Account2", 2000)
+
+chg1a = acct1.getCharge(20)
+chg1b = acct1.getCharge(100)
+
+chg2a = acct2.getCharge(25)
+chg2b = acct2.getCharge(105)
+
+puts "Now let's do some charges"
+chg1a.call
+chg1b.call
+chg2a.call
+chg2b.call
+
+chg1a.call
+chg2b.call
+
+# Exercises
+#
+# 1. Modify getCharge so that each returned proc also keeps 
+# track of the aggregate total of amounts charged through it, 
+# and reports this on each call.  For instance, on the second 
+# call of chg1a, chg1a would report an aggregate total of 20.  
+
+here is a diff of what I changed
+
+--- ../Kit/Examples/Procs.rb  2010-03-24 01:11:35.000000000 -0700
++++ Procs.txt  2010-03-24 18:31:32.000000000 -0700
+@@ -4,6 +4,8 @@
+ # 3. Dynamic, branching, RTS
+ 
+ class Account
++   @@charged = 0;
++
+    def initialize(name, bal)
+       @name = name    # Account name
+       @balance = bal  # Initial balance
+@@ -13,8 +15,9 @@
+ 
+    def getCharge(amt)
+       return proc {
++         @@charged += amt
+          @balance -= amt
+-         puts "Charging #{amt} to #{@name} leaving #{@balance}"
++         puts "Charging #{amt} to #{@name} leaving #{@balance}. Total #{@@charged}"
+       }
+    end
+ end
+
+
+
